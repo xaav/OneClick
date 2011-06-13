@@ -1,4 +1,4 @@
-<?php if(empty($_SESSION['started'])): ?>
+<?php if(empty($_GET['resource'])): ?>
     <html>
         <head>
         	<title>OneClick Installer</title>
@@ -11,7 +11,7 @@
         	</center>
     	</body>
     </html>
-    <?php $_SESSION['started'] = true; ?>
+
 <?php else: ?>
     <?php require_once __DIR__.'/logic.php'; ?>
 <?php endif; ?>

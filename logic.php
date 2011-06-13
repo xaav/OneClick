@@ -9,4 +9,4 @@ switch ($_GET['resource'])
         break;
 }
 
-require __DIR__.'includes/'.$file.'.php';
+require __DIR__.'/includes/'.$file.'.php';
