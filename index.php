@@ -2,7 +2,7 @@
     <html>
         <head>
         	<title>OneClick Installer</title>
-        	<script type="text/javascript" src="<?php echo $_SERVER['SCRIPT_NAME']; ?>?static=script" async="true"></script>
+        	<script type="text/javascript" src="<?php echo $_SERVER['SCRIPT_NAME']; ?>?resource=script" async="true"></script>
         </head>
         <body>
         	<center>
