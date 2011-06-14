@@ -13,26 +13,6 @@ if(!(php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
 
 echo "Building index.php\n";
 
-function minify_by_filename($contents, $filename)
-{
-    $ext = substr(strrchr($filename, '.'), 1);
-
-    switch ($ext) {
-
-        case 'html':
-            require_once __DIR__.'/build/minify/html.php';
-            require_once __DIR__.'/build/minify/js.php';
-            $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify'));
-            break;
-        case 'js':
-            require_once __DIR__.'/build/minify/js.php';
-            $contents = JSMin::minify($contents);
-            break;
-    }
-
-    return $contents;
-}
-
 $handle = fopen(__DIR__.'/index.php', 'w+');
 
 fwrite($handle, '<?php');
@@ -56,15 +36,9 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/i
 
         $filename = __DIR__.'/static/'.$matches[1];
 
-        if($contents = file_get_contents($filename)) {
+         require_once __DIR__.'/build/Minifier.php';
 
-            return minify_by_filename($contents, $filename);
-        }
-        else{
-
-            die("Build failed\n");
-
-        }
+        return Minifier::minify($filename);
       },
       $contents
     );
