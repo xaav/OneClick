@@ -5,14 +5,14 @@ class StaticResources
     public static function jQuery()
     {
         ?>
-<import resource="jquery.js" />
+<import resource="scripts/jquery.js" />
         <?php
     }
 
     public static function OneClick()
     {
         ?>
-<import resource="oneclick.js" />
+<import resource="scripts/oneclick.js" />
         <?php
     }
 }
