@@ -26,11 +26,16 @@ class Minifier
             case 'html':
                 require_once __DIR__.'/minify/html.php';
                 require_once __DIR__.'/minify/js.php';
-                $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify'));
+                require_once __DIR__.'/minify/css.php';
+                $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify', 'Minify_CSS_Compressor::process'));
                 break;
             case 'js':
                 require_once __DIR__.'/minify/js.php';
                 $contents = JSMin::minify($contents);
+                break;
+            case 'css':
+                require_once __DIR__.'/minify/css.php';
+                $contents = Minify_CSS_Compressor::process($contents);
                 break;
         }
     }
