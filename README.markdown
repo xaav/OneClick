@@ -1,5 +1,7 @@
 # OneClick Installer #
 
+***NOTE: THIS PROJECT IS UNDER **HEAVY** DEVELOPMENT. USE AT YOUR OWN RISK***
+
 ## What is OneClick? ##
 
 If you are used to installing applications on your site, you know what a pain 
