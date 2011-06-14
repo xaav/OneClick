@@ -31,7 +31,16 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/i
       '#\<import resource="(.+?)" \/\>#s',
       function ($matches) {
         echo "Adding resource $matches[1]\n";
-        return file_get_contents(__DIR__.'/static/'.$matches[1]);
+
+        if($contents = file_get_contents(__DIR__.'/static/'.$matches[1])) {
+
+            return $contents;
+        }
+        else{
+
+            die("Build failed\n");
+
+        }
       },
       $contents
     );
