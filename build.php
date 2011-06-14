@@ -4,6 +4,8 @@
  * This file builds index.php
  */
 
+//TODO: If someone has time to clean this code up, please do so.
+
 if(!(php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
 
     die('This file must be run from the command line.');
