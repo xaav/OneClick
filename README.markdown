@@ -8,4 +8,4 @@
 
 ### Building index.php ###
 
-Run ``php build.php`` from the command line.
+Run ``$ php build.php`` from the command line.
