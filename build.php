@@ -15,17 +15,17 @@ $handle = fopen(__DIR__.'/index.php', 'w+');
 
 fwrite($handle, '<?php');
 
-$objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/installer'), RecursiveIteratorIterator::SELF_FIRST);
-foreach($objects as $name => $object){
+echo "Adding files\n";
+
+foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/installer'), RecursiveIteratorIterator::SELF_FIRST) as $name => $object){
 
     echo "Adding file $name\n";
 
     $contents = file_get_contents($name);
 
-    if(substr($contents, 0, 5) == '<?php'){
+    if(substr($contents, 0, 5) == '<?php') $contents = substr($contents, 5);
 
-        $contents = substr($contents, 5);
-    }
+    $contents = preg_replace("'\s+'", ' ', $contents);
 
     $contents = preg_replace_callback(
       '#\<import resource="(.+?)" \/\>#s',
@@ -39,14 +39,9 @@ foreach($objects as $name => $object){
     fwrite($handle, $contents);
 }
 
-$contents = file_get_contents(__DIR__.'/start.php');
+echo "Completing build\n";
 
-if(substr($contents, 0, 5) == '<?php'){
-
-    $contents = substr($contents, 5);
-}
-
-fwrite($handle, $contents);
+fwrite($handle, ' OneClick::dispatch(@$_GET[\'id\']);');
 
 fclose($handle);
 
