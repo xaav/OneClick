@@ -11,6 +11,20 @@ if(!(php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
 
 echo "Building index.php\n";
 
+function minify_by_filename($contents, $filename)
+{
+    $ext = substr(strrchr($filename, '.'), 1);
+
+    switch ($ext) {
+
+        case 'html':
+            require_once __DIR__.'/build/minify/html.php';
+            $contents = Minify_HTML::minify($contents);
+    }
+
+    return $contents;
+}
+
 $handle = fopen(__DIR__.'/index.php', 'w+');
 
 fwrite($handle, '<?php');
@@ -32,9 +46,11 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/i
       function ($matches) {
         echo "Adding resource $matches[1]\n";
 
-        if($contents = file_get_contents(__DIR__.'/static/'.$matches[1])) {
+        $filename = __DIR__.'/static/'.$matches[1];
 
-            return $contents;
+        if($contents = file_get_contents($filename)) {
+
+            return minify_by_filename($contents, $filename);
         }
         else{
 
