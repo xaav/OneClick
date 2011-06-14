@@ -38,5 +38,7 @@ class Minifier
                 $contents = Minify_CSS_Compressor::process($contents);
                 break;
         }
+
+        return $contents;
     }
 }
