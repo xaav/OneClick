@@ -19,7 +19,13 @@ function minify_by_filename($contents, $filename)
 
         case 'html':
             require_once __DIR__.'/build/minify/html.php';
-            $contents = Minify_HTML::minify($contents);
+            require_once __DIR__.'/build/minify/js.php';
+            $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify'));
+            break;
+        case 'js':
+            require_once __DIR__.'/build/minify/js.php';
+            $contents = JSMin::minify($contents);
+            break;
     }
 
     return $contents;
