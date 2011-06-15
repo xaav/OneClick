@@ -27,7 +27,7 @@ class Minifier
                 require_once __DIR__.'/minify/html.php';
                 require_once __DIR__.'/minify/js.php';
                 require_once __DIR__.'/minify/css.php';
-                $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify', 'Minify_CSS_Compressor::process'));
+                $contents = Minify_HTML::minify($contents, array('jsMinifier' => 'JSMin::minify', 'cssMinifier' => 'Minify_CSS_Compressor::process'));
                 break;
             case 'js':
                 require_once __DIR__.'/minify/js.php';
