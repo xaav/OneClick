@@ -16,6 +16,9 @@ class OneClick
                 StaticResources::jQuery();
                 StaticResources::OneClick();
                 break;
+            case 'requirements_template':
+                Templates::RequirementsTemplate();
+                break;
             case 'requirements':
                 echo json_encode(Requirements::getRequirementNames());
                 break;
