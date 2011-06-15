@@ -23,27 +23,31 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/i
 
     echo "Adding file $name\n";
 
-    $contents = file_get_contents($name);
+    if(!is_dir($name)) {
 
-    if(substr($contents, 0, 5) == '<?php') $contents = substr($contents, 5);
+        $contents = file_get_contents($name);
 
-    $contents = preg_replace("'\s+'", ' ', $contents);
+        if(substr($contents, 0, 5) == '<?php') $contents = substr($contents, 5);
 
-    $contents = preg_replace_callback(
-      '#\<import resource="(.+?)" \/\>#s',
-      function ($matches) {
-        echo "Adding resource $matches[1]\n";
+        $contents = preg_replace("'\s+'", ' ', $contents);
 
-        $filename = __DIR__.'/static/'.$matches[1];
+        $contents = preg_replace_callback(
+          '#\<import resource="(.+?)" \/\>#s',
+          function ($matches) {
+            echo "Adding resource $matches[1]\n";
 
-         require_once __DIR__.'/build/Minifier.php';
+            $filename = __DIR__.'/static/'.$matches[1];
 
-        return Minifier::minify($filename);
-      },
-      $contents
-    );
+             require_once __DIR__.'/build/Minifier.php';
 
-    fwrite($handle, $contents);
+            return Minifier::minify($filename);
+          },
+          $contents
+        );
+
+        fwrite($handle, $contents);
+
+    }
 }
 
 echo "Completing build\n";
