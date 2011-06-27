@@ -5,7 +5,7 @@ class Minifier
     public static function minify($filename)
     {
         list($ext, $contents) = self::getMetadata($filename);
-        return self::compress($contents, $ext);
+        return $contents;//self::compress($contents, $ext);
     }
 
     protected static function getMetadata($filename)

@@ -1,8 +1,28 @@
 
-function checkRequirements()
+function OneClick()
 {
-	if(window.requirements && window.requirementsTemplate) {
+	var requirements;
+	var requirementsTemplate;
+	
+	/**
+	 * Processes the requirements if the data has been retreived
+	 */
+	var checkRequirements = function()
+	{
+		console.log('Checking requirements...');
 		
+		console.log(this.requirements);
+		console.log(this.requirementsTemplate);
+		
+		if(this.requirements && this.requirementsTemplate)
+		{
+			console.log('Loading requirements...');
+			loadRequirements();
+		}
+	};
+	
+	var loadRequirements = function()
+	{
 		$('#content').fadeOut('fast', function() {
 			
 			$("#content").html(window.requirementsTemplate);
@@ -16,21 +36,33 @@ function checkRequirements()
 			
 			$('#content').fadeIn('fast');
 		});
-	}
+	};
+	
+	var requirementsHandler = function(data)
+	{
+		console.log(data);
+		
+		json = new JSON();
+		
+		requirements = json.decode(data);
+		checkRequirements();
+	};
+	
+	var requirementsTemplateHandler = function(data)
+	{
+		requirementsTemplate = data;
+		checkRequirements();
+	};
+	
+	this.dispatch = function()
+	{		
+		$.get('index.php', {'id':'requirements'}, requirementsHandler);
+		
+		$.get('index.php', {'id':'requirements_template'}, requirementsTemplateHandler);
+	};
 }
 
+oneclick = new OneClick();
+$(document).ready(oneclick.dispatch);
 
-$(document).ready(function() {
-	
-	$.get('index.php', { id : "requirements" }, function (data) {
-		
-		window.requirements = eval(data);
-		checkRequirements();
-	});
-	
-	$.get('index.php', { id: 'requirements_template' }, function(data) {
-		
-		window.requirementsTemplate = data;
-		checkRequirements();
-	});
-});
+console.log(oneclick);

@@ -13,6 +13,7 @@ class StaticResources
     {
         ?>
 <import resource="scripts/oneclick.js" />
+<import resource="scripts/json.js" />
         <?php
     }
 }
