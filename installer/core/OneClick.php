@@ -1,5 +1,7 @@
 <?php
 
+sleep(1); //HACK FOR DEBUG
+
 class OneClick
 {
     public static function dispatch($query)
@@ -23,7 +25,7 @@ class OneClick
                 echo json_encode(Requirements::getRequirementNames());
                 break;
             case 'check_requirement':
-                echo json_encode(Requirements::checkRequirementByName($exploded[1]));
+                echo json_encode(array($exploded[1] => Requirements::checkRequirementByName($exploded[1])));
 
         }
     }
