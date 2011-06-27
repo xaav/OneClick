@@ -44,13 +44,13 @@ function OneClick()
 		
 		json = new JSON();
 		
-		requirements = json.decode(data);
+		window.requirements = json.decode(data);
 		checkRequirements();
 	};
 	
 	var requirementsTemplateHandler = function(data)
 	{
-		requirementsTemplate = data;
+		window.requirementsTemplate = data;
 		checkRequirements();
 	};
 	
