@@ -19,7 +19,7 @@ fwrite($handle, '<?php');
 
 echo "Adding files\n";
 
-foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/installer'), RecursiveIteratorIterator::SELF_FIRST) as $name => $object){
+foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/src'), RecursiveIteratorIterator::SELF_FIRST) as $name => $object){
 
     echo "Adding file $name\n";
 
@@ -36,7 +36,7 @@ foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/i
           function ($matches) {
             echo "Adding resource $matches[1]\n";
 
-            $filename = __DIR__.'/static/'.$matches[1];
+            $filename = __DIR__.'/web/'.$matches[1];
 
              require_once __DIR__.'/build/Minifier.php';
 
