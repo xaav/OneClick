@@ -6,54 +6,98 @@
 
 //TODO: If someone has time to clean this code up, please do so.
 
-if(!(php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
+//<functions>
 
-    die('This file must be run from the command line.');
+function build_fail($reason)
+{
+    writeln($reason);
+    writeln('Build failed.');
+    die();
 }
 
-echo "Building index.php\n";
+function writeln($message)
+{
+    echo $message."\n";
+}
 
-$handle = fopen(__DIR__.'/index.php', 'w+');
+function from_cli()
+{
+    if((php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
 
-fwrite($handle, '<?php');
+        return true;
+    }
+    else {
 
-echo "Adding files\n";
-
-foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator(__DIR__.'/src'), RecursiveIteratorIterator::SELF_FIRST) as $name => $object){
-
-    echo "Adding file $name\n";
-
-    if(!is_dir($name)) {
-
-        $contents = file_get_contents($name);
-
-        if(substr($contents, 0, 5) == '<?php') $contents = substr($contents, 5);
-
-        $contents = preg_replace("'\s+'", ' ', $contents);
-
-        $contents = preg_replace_callback(
-          '#\<import resource="(.+?)" \/\>#s',
-          function ($matches) {
-            echo "Adding resource $matches[1]\n";
-
-            $filename = __DIR__.'/web/'.$matches[1];
-
-             require_once __DIR__.'/build/Minifier.php';
-
-            return Minifier::minify($filename);
-          },
-          $contents
-        );
-
-        fwrite($handle, $contents);
-
+        return false;
     }
 }
 
-echo "Completing build\n";
+function replace_static($matches)
+{
 
-fwrite($handle, ' OneClick::dispatch(@$_GET[\'id\']);');
+    $filename = __DIR__.'/web/'.$matches[1];
 
-fclose($handle);
+    return Minifier::minify($filename);
+}
+
+//</functions>
+
+
+writeln('Building index.php');
+
+if(!from_cli())
+{
+    build_fail('This file must be run from the cli.');
+}
+
+require_once __DIR__.'/src/Builder/Minifier.php';
+require_once __DIR__.'/src/Builder/minify/html.php';
+require_once __DIR__.'/src/Builder/minify/js.php';
+require_once __DIR__.'/src/Builder/minify/css.php';
+
+
+$contents = '<?php';
+
+writeln('Searching for files...');
+
+$files =    new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator(__DIR__.'/src'),
+                RecursiveIteratorIterator::SELF_FIRST
+            );
+
+writeln('Adding files...');
+
+foreach($files as $name => $object){
+
+    if(is_file($name)) {
+
+        $file = file_get_contents($name);
+
+        if(substr($file, 0, 5) == '<?php')
+        {
+            $file = substr($file, 5);
+        }
+
+        $file = preg_replace_callback(
+          '#\<import resource="(.+?)" \/\>#s',
+          'replace_static',
+          $file
+        );
+
+        $contents .= $file;
+    }
+}
+
+$contents .= ' OneClick::dispatch(@$_GET[\'id\']);';
+
+writeln('Writing file...');
+
+file_put_contents(__DIR__.'/index.php', $contents);
+
+writeln('Compressing file...');
+
+$contents = php_strip_whitespace(__DIR__.'/index.php');
+
+file_put_contents(__DIR__.'/index.php', $contents);
 
 echo "Successfully built index.php\n";
