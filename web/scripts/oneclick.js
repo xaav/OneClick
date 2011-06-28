@@ -1,12 +1,15 @@
 
 function OneClick()
 {
+	var requirementsDone = function()
+	{
+		console.log('Callback: requirementsDone');
+	};
+	
 	this.dispatch = function()
 	{		
 		requirements = new Requirements();
-		requirements.verify();
-		
-		
+		requirements.verify(requirementsDone);		
 	};
 }
 

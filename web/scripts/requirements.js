@@ -1,8 +1,10 @@
 function Requirements()
 {
-	this.verify = function()
+	this.verify = function(callbackFunction)
 	{
 		//Verify the requirements
+		
+		callback = callbackFunction;
 		
 		$.get('index.php', {'id':'requirements'}, requirementsHandler);
 		
@@ -11,12 +13,13 @@ function Requirements()
 	
 	var requirements;
 	var requirementsTemplate;
+	var callback;
 	
 	/**
 	 * Processes the requirements if the data has been retreived
 	 */
 	var checkRequirements = function()
-	{
+	{		
 		console.log('Checking requirements...');
 		
 		console.log(this.requirements);
@@ -48,6 +51,13 @@ function Requirements()
 	
 	var verifyRequirements = function()
 	{
+		window.requirementsCount = 0;
+		
+		for(requirement in window.requirements)
+		{
+			window.requirementsCount++;
+		}
+		
 		for(requirement in window.requirements)
 		{
 			$.get('index.php', {'id':'check_requirement|' + requirement }, verifyRequirement);
@@ -59,16 +69,29 @@ function Requirements()
 		json = new JSON();
 		results = json.decode(data);
 		
+		window.requirementsPassed = 0;
+		
 		for(result in results)
 		{
 			if(results[result])
 			{
-				$('#requirement_' + result).html('PASSED');
+				$('#requirement_' + result).html($('#requirement_' + result).html() + ' [PASSED]');
 			}
 			else
 			{
-				$('#requirement_' + result).html('FAILED');
+				$('#requirement_' + result).html($('#requirement_' + result).html() + ' [FAILED]');
 			}
+			
+			window.requirementsPassed ++;
+		}
+		
+		console.log(window.requirementsCount);
+		console.log(window.requirementsPassed);
+		
+		if(window.requirementsPassed >= window.requirementsCount)
+		{
+			console.log('All requirements verified.');
+			callback();
 		}
 	};
 	
