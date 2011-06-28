@@ -17,7 +17,7 @@ function build_fail($reason)
 
 function writeln($message)
 {
-    echo $message."\n";
+    echo "> ".$message."\n";
 }
 
 function from_cli()
@@ -69,6 +69,11 @@ writeln('Adding files...');
 
 foreach($files as $name => $object){
 
+    if(strpos($name, 'Builder'))
+    {
+        continue; //TODO: Remove this hack to omit the Builder directory
+    }
+
     if(is_file($name)) {
 
         $file = file_get_contents($name);
@@ -100,4 +105,4 @@ $contents = php_strip_whitespace(__DIR__.'/index.php');
 
 file_put_contents(__DIR__.'/index.php', $contents);
 
-echo "Successfully built index.php\n";
+writeln('Successfully built index.php');
