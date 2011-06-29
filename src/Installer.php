@@ -2,7 +2,7 @@
 
 class Installer implements InstallerInterface
 {
-    public static function getSteps()
+    public function getSteps()
     {
         return array(
             'firststep' => 'Downloading...',
@@ -10,7 +10,7 @@ class Installer implements InstallerInterface
         );
     }
 
-    public static function processStepByName($name)
+    public function processStepByName($name)
     {
         switch ($name)
         {
@@ -21,7 +21,7 @@ class Installer implements InstallerInterface
         }
     }
 
-    public static function getPercentComplete()
+    public function getPercentComplete()
     {
         return .5;
     }

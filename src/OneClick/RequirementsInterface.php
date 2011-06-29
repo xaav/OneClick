@@ -2,7 +2,7 @@
 
 interface RequirementsInterface
 {
-    public static function getRequirementNames();
+    public function getRequirementNames();
 
-    public static function checkRequirementByName($name);
+    public function checkRequirementByName($name);
 }

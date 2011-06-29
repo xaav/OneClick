@@ -2,14 +2,14 @@
 
 class Requirements implements RequirementsInterface
 {
-    public static function getRequirementNames()
+    public function getRequirementNames()
     {
         return array(
             'fakerequirement' => 'Some Fake Requirement',
         );
     }
 
-    public static function checkRequirementByName($name)
+    public function checkRequirementByName($name)
     {
         switch ($name) {
 
