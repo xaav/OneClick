@@ -5,7 +5,7 @@ function Installer()
 	
 	var fadeOutDone = function()
 	{
-		alert('hello');
+		
 	};
 	
 	this.install = function(callbackFunction)

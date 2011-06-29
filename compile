@@ -18,6 +18,14 @@ function fatal()
     }
 }
 
+function get_path($path)
+{
+	$path = realpath($path);
+	$path = str_replace('\\','/', $path);
+    
+    return $path;
+}
+
 function build_fail($reason)
 {
     writeln($reason);
@@ -79,13 +87,17 @@ $files =    new RecursiveIteratorIterator(
 
 writeln('Adding files...');
 
+$builder = explode('/', get_path(__DIR__.'/src/Builder'));
+
 foreach($files as $name => $object){
 
-    if(strpos($name, 'Builder'))
+    $target = explode('/', get_path($name));
+    
+    if(array_slice($target, 0, count($builder)) == $builder)
     {
-        continue; //TODO: Remove this hack to omit the Builder directory
+        continue;            
     }
-
+        
     if(is_file($name)) {
 
         $file = file_get_contents($name);
