@@ -4,6 +4,14 @@ function OneClick()
 	var requirementsDone = function()
 	{
 		console.log('Callback: requirementsDone');
+		
+		installer = new Installer();
+		installer.install(installerDone);
+	};
+	
+	var installerDone = function()
+	{
+		console.log('Callback: installerDone');
 	};
 	
 	this.dispatch = function()
