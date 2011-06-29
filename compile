@@ -9,6 +9,15 @@
 
 //<functions>
 
+function fatal()
+{
+    global $finished;
+    if(!$finished)
+    {
+        build_fail('A fatal error occurred while building');
+    }
+}
+
 function build_fail($reason)
 {
     writeln($reason);
@@ -42,6 +51,8 @@ function replace_static($matches)
 }
 
 //</functions>
+
+register_shutdown_function('fatal');
 
 
 writeln('Building index.php');
@@ -106,4 +117,11 @@ $contents = php_strip_whitespace(__DIR__.'/index.php');
 
 file_put_contents(__DIR__.'/index.php', $contents);
 
+writeln('Testing file...');
+
+ob_start();
+include __DIR__.'/index.php';
+ob_get_clean();
+
 writeln('Successfully built index.php');
+$finished = true;
