@@ -58,6 +58,17 @@ function replace_static($matches)
     return Minifier::minify($filename);
 }
 
+function replace_config($matches)
+{
+    return "\"".get_config($matches[1])."\"";        
+}
+
+function get_config($value)
+{
+    $config = parse_ini_file(__DIR__.'/config/config.ini');
+    return $config[$value];        
+}
+
 //</functions>
 
 register_shutdown_function('fatal');
@@ -107,6 +118,18 @@ foreach($files as $name => $object){
             $file = substr($file, 5);
         }
 
+        $file = preg_replace_callback(
+          '#config\\("(.+?)"\\)#s',
+          'replace_config',
+          $file
+        );
+        
+        $file = preg_replace_callback(
+          '#config\\(\'(.+?)\'\\)#s',
+          'replace_config',
+          $file
+        );
+        
         $file = preg_replace_callback(
           '#\<import resource="(.+?)" \/\>#s',
           'replace_static',

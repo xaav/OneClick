@@ -1,6 +1,8 @@
 <?php
 
-sleep(1); //HACK FOR DEBUG
+if(config('debug')) {
+    sleep(1);
+}
 
 class OneClick
 {
