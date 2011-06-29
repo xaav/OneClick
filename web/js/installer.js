@@ -1,16 +1,7 @@
-
-function Installer()
-{
-	var callback;
+function Install(callback) {
 	
-	var fadeOutDone = function()
-	{
+	$('body').fadeOut('fast', function() {
 		
-	};
-	
-	this.install = function(callbackFunction)
-	{
-		callback = callbackFunction;
-		$('body').fadeOut('fast', fadeOutDone);
-	};
+		alert(formulateUrl('getInstallerSteps'));
+	});
 }

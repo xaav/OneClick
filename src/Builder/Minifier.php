@@ -12,7 +12,7 @@ class Minifier
     {
         $ext = substr(strrchr($filename, '.'), 1);
 
-        $contents = file_get_contents($filename) or die('Build failed');
+        $contents = file_get_contents($filename) or die();
 
         return array($ext, $contents);
     }

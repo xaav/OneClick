@@ -51,4 +51,9 @@ class OneClick
     {
         echo json_encode(array($requirement => $this->requirements->checkRequirementByName($requirement)));
     }
+
+    public function getInstallerSteps()
+    {
+
+    }
 }
