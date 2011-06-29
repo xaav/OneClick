@@ -29,8 +29,7 @@ function OneClick()
 	{
 		console.log('Callback: requirementsDone');
 		
-		installer = new Installer();
-		installer.install(installerDone);
+		Install(installerDone);
 	};
 	
 	var installerDone = function()

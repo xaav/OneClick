@@ -54,6 +54,14 @@ class OneClick
 
     public function getInstallerSteps()
     {
+        $steps = $this->installer->getSteps();
 
+        return json_encode($steps);
+    }
+
+    public function processInstallerStepByName($name)
+    {
+        $this->installer->processStepByName($name);
+        return $this->installer->getPercentComplete();
     }
 }
