@@ -20,8 +20,14 @@ entire directory.
 
 ## For users ##
 
+OneClick is avaliable as a download file. For a list of avaliable files,
+check [here][1]. More files will be avaliable after development of this
+project is completed.
+
+[1]: http://xaav.tk/OneClick
+
 ## For developers ##
 
 ### Building index.php ###
 
-Run ``$ php build.php`` from the command line.
+Run ``$ ./compile`` from the command line.
