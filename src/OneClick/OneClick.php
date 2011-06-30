@@ -18,6 +18,7 @@ class OneClick extends Base
         require 'js/json.js';
         require 'js/requirements.js';
         require 'js/installer.js';
+        require 'js/junk.js';
     }
 
     public function requirements_template()
