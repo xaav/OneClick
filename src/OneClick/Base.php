@@ -21,6 +21,6 @@ class Base
 
         if(!$id) $id = 'start';
 
-        echo call_user_func_array(array(new self(), $id), $exploded);
+        echo call_user_func_array(array(new OneClick(), $id), $exploded);
     }
 }
