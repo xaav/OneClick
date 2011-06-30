@@ -9,7 +9,14 @@ function OneClick()
 	
 	var installerDone = function()
 	{
-		console.log('Callback: installerDone');
+		$.get(makeUrl('getFinishedTemplate'), function(data) {
+			
+			$('body').fadeOut(function(){
+				
+				$('#content').html(data);
+				$('body').fadeIn();
+			});
+		});
 	};
 	
 	this.dispatch = function()

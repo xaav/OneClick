@@ -44,4 +44,9 @@ class OneClick extends Base
         $this->installer->processStepByName($name);
         return $this->installer->getPercentComplete();
     }
+
+    public function getFinishedTemplate()
+    {
+        require 'html/finished.html';
+    }
 }
