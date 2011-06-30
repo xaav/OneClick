@@ -100,6 +100,8 @@ writeln('Compressing file...');
 
 $contents = php_strip_whitespace(__DIR__.'/index.php');
 
+$contents = preg_replace('/<\\?php(\\s+)\\?>/is', '', $contents);
+
 file_put_contents(__DIR__.'/index.php', $contents);
 
 writeln('Testing file...');
