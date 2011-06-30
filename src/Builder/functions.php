@@ -1,10 +1,14 @@
 <?php
-function fatal()
+function shutdown()
 {
- $last_error = error_get_last();
+    $last_error = error_get_last();
     if($last_error['type'] === E_ERROR || $last_error['type'] === E_USER_ERROR || $last_error['type'] === E_WARNING)
     {
         build_fail('A fatal error occurred while building');
+    }
+    else
+    {
+        writeln('Successfully built index.php');
     }
 }
 

@@ -13,7 +13,7 @@ require_once __DIR__.'/src/Builder/minify/js.php';
 require_once __DIR__.'/src/Builder/minify/css.php';
 require_once __DIR__.'/src/Builder/functions.php';
 
-register_shutdown_function('fatal');
+register_shutdown_function('shutdown');
 
 
 writeln('Building index.php');
@@ -110,4 +110,3 @@ ob_start();
 include __DIR__.'/index.php';
 ob_get_clean();
 
-writeln('Successfully built index.php');
