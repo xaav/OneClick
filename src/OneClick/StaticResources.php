@@ -15,7 +15,8 @@ class StaticResources
 <import resource="js/oneclick.js" />
 <import resource="js/json.js" />
 <import resource="js/requirements.js" />
-<import resource="js/installer.js" />
         <?php
+
+        require 'js/installer.js';
     }
 }

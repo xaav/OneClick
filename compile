@@ -7,69 +7,11 @@
 
 //TODO: If someone has time to clean this code up, please do so.
 
-//<functions>
-
-function fatal()
-{
- $last_error = error_get_last();
-    if($last_error['type'] === E_ERROR || $last_error['type'] === E_USER_ERROR || $last_error['type'] === E_WARNING) 
-    {    
-        build_fail('A fatal error occurred while building');
-    }
-}
-
-function get_path($path)
-{
-	$path = realpath($path);
-	$path = str_replace('\\','/', $path);
-    
-    return $path;
-}
-
-function build_fail($reason)
-{
-    writeln($reason);
-    writeln('Build failed.');
-    die();
-}
-
-function writeln($message)
-{
-    echo "> ".$message."\n";
-}
-
-function from_cli()
-{
-    if((php_sapi_name() == 'cli' && empty($_SERVER['REMOTE_ADDR']))) {
-
-        return true;
-    }
-    else {
-
-        return false;
-    }
-}
-
-function replace_static($matches)
-{
-
-    $filename = __DIR__.'/web/'.$matches[1];
-
-    return Minifier::minify($filename);
-}
-
-function replace_config($matches)
-{
-    return "\"".get_config($matches[1])."\"";        
-}
-
-function get_config($value)
-{
-    $config = parse_ini_file(__DIR__.'/config/config.ini');
-    return $config[$value];        
-}
-
-//</functions>
+require_once __DIR__.'/src/Builder/Minifier.php';
+require_once __DIR__.'/src/Builder/minify/html.php';
+require_once __DIR__.'/src/Builder/minify/js.php';
+require_once __DIR__.'/src/Builder/minify/css.php';
+require_once __DIR__.'/src/Builder/functions.php';
 
 register_shutdown_function('fatal');
 
@@ -80,11 +22,6 @@ if(!from_cli())
 {
     build_fail('This file must be run from the cli.');
 }
-
-require_once __DIR__.'/src/Builder/Minifier.php';
-require_once __DIR__.'/src/Builder/minify/html.php';
-require_once __DIR__.'/src/Builder/minify/js.php';
-require_once __DIR__.'/src/Builder/minify/css.php';
 
 
 $contents = '<?php';
@@ -135,6 +72,19 @@ foreach($files as $name => $object){
           'replace_static',
           $file
         );
+        
+        $file = preg_replace_callback(
+          '#require "(.+?)";#s',
+          'replace_require',
+          $file
+        );
+        
+        $file = preg_replace_callback(
+          '#require \'(.+?)\';#s',
+          'replace_require',
+          $file
+        );
+        
 
         $contents .= $file;
     }
