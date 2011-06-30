@@ -2,7 +2,7 @@ function Install(callback) {
 	
 	$('body').fadeOut('fast', function() {
 		
-		$.getJSON(formulateUrl('getInstallerSteps'), function(steps) {
+		$.getJSON(makeUrl('getInstallerSteps'), function(steps) {
 			
 			names = [];
 			
@@ -14,7 +14,7 @@ function Install(callback) {
 			current = 0;
 			
 			var processNextStep = function () {
-				$.getJSON(formulateUrl('processInstallerStepByName', [names[current]]), function(data) {
+				$.getJSON(makeUrl('processInstallerStepByName', [names[current]]), function(data) {
 					current++;
 					
 					if(typeof(names[current]) != 'undefined') {

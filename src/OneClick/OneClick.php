@@ -1,9 +1,5 @@
 <?php
 
-if(config('debug')) {
-    sleep(1);
-}
-
 class OneClick extends Base
 {
     public function start()

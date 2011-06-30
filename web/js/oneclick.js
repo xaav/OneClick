@@ -14,8 +14,7 @@ function OneClick()
 	
 	this.dispatch = function()
 	{		
-		requirements = new Requirements();
-		requirements.verify(requirementsDone);		
+		VerifyRequirements(requirementsDone);
 	};
 }
 

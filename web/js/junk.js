@@ -10,7 +10,7 @@ Function.prototype.defaults = function()
   }
 }
 
-var formulateUrl = function(func,params)
+var makeUrl = function(func,params)
 {
 	var url = 'index.php?id=' + func + '|';
 	
