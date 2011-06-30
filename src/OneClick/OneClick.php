@@ -8,18 +8,21 @@ class OneClick extends Base
 {
     public function start()
     {
-        Templates::StartPage();
+        require 'html/start.html';
     }
 
     public function scripts()
     {
-        StaticResources::jQuery();
-        StaticResources::OneClick();
+        require 'js/jquery.js';
+        require 'js/oneclick.js';
+        require 'js/json.js';
+        require 'js/requirements.js';
+        require 'js/installer.js';
     }
 
     public function requirements_template()
     {
-        Templates::RequirementsTemplate();
+        require 'html/requirements.html';
     }
 
     public function requirements()
