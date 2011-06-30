@@ -7,8 +7,21 @@ class Base
 
     public function __construct()
     {
-        $this->installer = new Installer();
-        $this->requirements = new Requirements();
+        $installerClass = config('installer_class');
+        $requirementsClass = config('requirements_class');
+
+        $this->installer = new $installerClass();
+        $this->requirements = new $requirementsClass();
+
+        if(!($this->installer instanceof InstallerInterface))
+        {
+            throw new Exception('Invalid installer class');
+        }
+
+        if(!($this->requirements instanceof RequirementsInterface))
+        {
+            throw new Exception('Invalid requirements class');
+        }
     }
 
     public static function dispatch($query)
