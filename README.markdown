@@ -1,7 +1,5 @@
 # OneClick Installer #
 
-***NOTE: THIS PROJECT IS UNDER HEAVY DEVELOPMENT. USE AT YOUR OWN RISK.***
-
 ## What is OneClick? ##
 
 If you are used to installing applications on your site, you know what a pain 
@@ -27,6 +25,13 @@ project is completed.
 [1]: http://xaav.tk/OneClick
 
 ## For developers ##
+
+Developing a OneClick installer is easy and can be done in less than an hour.
+OneClick takes the hard work out, so you only need to write to PHP code
+and maybe a CSS file - all JavaScript is already written. Check [here][2]
+to get started.
+
+[2]: https://github.com/xaav/OneClick/wiki/Developing
 
 ### Building index.php ###
 
